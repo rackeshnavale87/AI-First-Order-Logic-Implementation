@@ -3,8 +3,7 @@ import java.io.*;
 
 /**
  * @author Rakesh Sharad Navale.
- * 		   (navale@usc.edu) | A.I. Assignment | Fall 2014.
-
+ * 
  * @class FOLBC
  * Given the knowledge base and the query in a text file called "input.txt".
  * The first line of the input file contains the query. The second line contains an integer n specifying
@@ -38,11 +37,11 @@ import java.io.*;
 
 class FOLBC
 {
-	public static int n; 									// Get number of clauses from Notepad
+	public static int n; 					// Get number of clauses from Notepad
  	static String CheckAns = "";
 	public static String ask; 
-	public static String query; 							//Get query to search for FOL from Notepad 
-	public static String tell="";							//Get KB from Notepad
+	public static String query; 				//Get query to search for FOL from Notepad 
+	public static String tell="";				//Get KB from Notepad
 	static String delimiter1 = "\\(";
 	static String delimiter2 = ",";
 	static String delimiter3 = "\\)";
@@ -55,8 +54,8 @@ class FOLBC
 	public static ArrayList<String> Checked;
 	public static ArrayList<String> fpred;
 	public static ArrayList<String> cpred;	
-	public static ArrayList<ArrayList<String>> fparam;		// Fact parameters
-	public static ArrayList<ArrayList<String>> cparam;		// Clause parameter
+	public static ArrayList<ArrayList<String>> fparam;	// Fact parameters
+	public static ArrayList<ArrayList<String>> cparam;	// Clause parameter
 	public static ArrayList<ArrayList<String>> pparam;		
 
 	public static void main(String[] args) throws IOException 
@@ -82,17 +81,13 @@ class FOLBC
 			
 			query = reader.readLine();
 	        n =Integer.valueOf(reader.readLine());
-//			System.out.println("Query is : " + query);
-//			System.out.println("Number of Clauses in KB : " + n +". Which are :-");
-			
 			tell = reader.readLine(); //get all the KB clauses
 			tell = tell.concat(";");
 			for (int i = 0; i < n-1; i++) {
 				tell = tell.concat(reader.readLine());
 				tell = tell.concat(";");
 			}
-//			System.out.println(tell);
-			
+
 			 String[] sentences = tell.split(";");
 			 	for (int j=0;j<sentences.length;j++){
 			 		if (!sentences[j].contains("=>")) 
@@ -126,11 +121,8 @@ class FOLBC
 			 		}
 			 		fparam.add(temp4);
 			 	}
-//				System.out.println(fparam);
-//				System.out.println("--------------------------------------------------------------------");
 			ask = query;
 			Tasks.add(ask);
-			//System.out.println(execute());
 			run();
 		}
 	    finally 
@@ -148,11 +140,11 @@ class FOLBC
 	    }
 	}
 
-// method which calls the main BackChainInfer() method and returns output whether the query can be infer or not
+//Method which calls the main BackChainInfer() method and returns output whether the query can be infer or not
 	public static String run() throws IOException
 	{
-	 	if (BackChainInfer())
-	 	{// BackChainInfer method returned true so it can ans. query correctly with KB
+	 	if (BackChainInfer()) {
+	 	// BackChainInfer method returned true so it can ans. query correctly with KB
 	 		CheckAns = "Proved : ";
 	 		for (int i=Checked.size()-1;i>=0;i--)
 	 		{
@@ -161,16 +153,15 @@ class FOLBC
 	 				else	
 	 					CheckAns += Checked.get(i)+", ";
 	 		}
-//	 		System.out.println("Entailed : "+CheckAns);
 	 	}
-	 	else
-	 	{// BackChainInfer method returned False so it can ans. query correctly with KB
+	 	else {
+	 		// BackChainInfer method returned False so it can ans. query correctly with KB
 	 		CheckAns = "NOT Proved";
 	 	}
 	 	return CheckAns;		
 	 }
 	 
-	 //Implementation of FOL backward chaining algorithm
+ //Implementation of FOL backward chaining algorithm
 	public static boolean BackChainInfer() throws IOException
 	{
 	    BufferedWriter writer = null;
@@ -199,7 +190,6 @@ class FOLBC
 		 		{
 		 			try
 		 			{
-		 				//System.out.println("FALSE");
 		 				writer.write("FALSE");
 		 				writer.close();
 		 			}
@@ -243,38 +233,30 @@ class FOLBC
 		if(facts.contains(q)) // direct fact.. return true
 			return true;
 		
-			for(int a =0; a<fparam.size();a++)
-			{
+			for(int a =0; a<fparam.size();a++) {
 				ArrayList<String> comparelist = fparam.get(a);
 				if(comparelist.contains(ptemp3[0]))
 				{yes =0;
-					for(int e=0; e<ptemp3.length;e++)
-					{ 
+					for(int e=0; e<ptemp3.length;e++) { 
+						if(comparelist.get(e).equals(ptemp3[e]) || ptemp3[e].equals("x"))
 						{
-							if(comparelist.get(e).equals(ptemp3[e]) || ptemp3[e].equals("x"))
-							{
-								yes++;
-								if(ptemp3.length == yes)
-									return true;
+							yes++;
+							if(ptemp3.length == yes)
+								return true;
 
-							}							
-							else
-								continue;
-						}
+						}							
+						else
+							continue;
 					}
 				}
 			}
 			return false;
 	}
 	
-	
-//	methid that returns the conjuncts contained in a clause
-	public static ArrayList<String> getPremises(String clause)
-	{
-		// TODO Auto-generated method stub
+//Methid that returns the conjuncts contained in a clause
+	public static ArrayList<String> getPremises(String clause) {
 		 //ArrayList<String> temp4 = new ArrayList<String>();	
 		String premise = clause.split("=>")[0];
-
 //			String conclusion = clause.split("=>")[1];
 // 			get premise parameter and put it into conjucts
 //			String ctemp2 = conclusion;
@@ -319,14 +301,10 @@ class FOLBC
 		ptemp22.replaceAll(delimiter5, delimiter2);
 		String ptemp33[] = ptemp22.split("[\\(,)]");
 	
-		if(ptemp3[0].equals((ptemp33[0])))
-			{
-				for(int e=0; e<ptemp3.length;e++)
-				{
+		if(ptemp3[0].equals((ptemp33[0]))) {
+				for(int e=0; e<ptemp3.length;e++) {
 					if(ptemp3[e].equals(ptemp33[e]) || ptemp33[e].equals("x") || ptemp3[e].equals("x"))
-					{
 						yes++;
-					}					
 					else
 						continue;
 				}
